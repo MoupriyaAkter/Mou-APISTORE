@@ -6,6 +6,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <link rel="stylesheet" href="style.css">
 <title>My API Store</title>
 </head>
@@ -26,6 +28,21 @@
 <div class="cover_img">
 <img src="./cover-image.png" alt="Mobile Cover photo">
 </div>
+
+<!-- Search Bar -->
+<section class="search-section">
+  <h2>Search Your Phone</h2>
+  <div class="search-box">
+    <i class="fa fa-search"></i>
+    <input type="text" id="searchInput" placeholder="Search Your Phone" />
+    <button onclick="handle_search()" id="searchBtn">Search</button>
+  </div>
+</section>
+
+<!-- Font Awesome for search icon -->
+
+
+
 <!-- Card section------------ -->
 <section id="card-section">
 <!-- Card -->
@@ -141,5 +158,8 @@
  
     </div>
 </footer>
+
+<script src="./java.js"></script>
+
 </body>
 </html>

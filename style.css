@@ -88,6 +88,71 @@ header.top-section {
   margin: auto;
 
 }
+
+
+/* Search section */
+.search-section {
+  text-align: center;
+  margin: 60px auto;
+}
+
+/* Section title */
+.search-section h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+/* Search box container */
+.search-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  max-width: 700px;
+  background: #f6f6de; /* light cream background */
+  border: 1px solid #000;
+  border-radius: 8px;
+  margin: 0 auto;
+  padding: 10px 15px;
+}
+
+/* Search icon */
+.search-box i {
+  color: #000;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+/* Input field */
+.search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #000;
+}
+
+/* Search button */
+.search-box button {
+  background: #006aff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition:  0.8s ;
+}
+
+.search-box button:hover {
+  background: #0052cc;
+}
+
+
+
+
 /* Card Section Container */
 #card-section {
   display: grid;
