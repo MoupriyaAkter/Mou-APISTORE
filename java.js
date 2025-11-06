@@ -1,24 +1,39 @@
 console.log("Moupriya Akter- CSE2302029125");
-function handle_search(){
-	const get_input_search=document.getElementById('searchInput');
-	const diplay_value=get_input_search.value;
-	console.log(diplay_value);
-	
-}
-/*another format of Function
-const functionname=(parameter)=>{
-	function description
-}*/
 
+// ---- Show/hide loading animation ----
+function showLoading(isLoading) {
+  const loader = document.querySelector("#loading .loader"); // target inner loader div
+  if (isLoading) {
+    loader.classList.remove("hidden");
+  } else {
+    loader.classList.add("hidden");
+  }
+}
+
+// ---- DOM elements ----
 const grid = document.getElementById('card-section');
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
 
-let showingStatic = true; // to track if initial HTML cards are visible
+let showingStatic = true; // track if initial static cards are visible
 
-// ---- Function to display phones dynamically ----
+// ---- Fetch phones from API ----
+async function fetchPhones(searchText) {
+  showLoading(true); // show loader while fetching
+  try {
+    const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`);
+    const data = await res.json();
+    displayProducts(data.data);
+  } catch (err) {
+    console.error(err);
+    grid.innerHTML = '<p style="text-align:center;">Error loading data.</p>';
+  }
+  showLoading(false); // hide loader after fetching
+}
+
+// ---- Display products dynamically ----
 function displayProducts(phones) {
-  grid.innerHTML = ''; // clear old content
+  grid.innerHTML = ''; // clear previous cards
   showingStatic = false;
 
   if (!phones || phones.length === 0) {
@@ -44,45 +59,21 @@ function displayProducts(phones) {
   });
 }
 
-// ---- Function to show temporary loading animation ----
-function showLoading() {
-  grid.innerHTML = `
-    <div class="loading" style="text-align:center; padding:50px; font-size:18px;">
-      Loading...
-    </div>
-  `;
-}
-
-// ---- Fetch phones from API ----
-async function fetchPhones(searchText) {
-  showLoading(); // show loading first
-  try {
-    const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`);
-    const data = await res.json();
-    displayProducts(data.data);
-  } catch (error) {
-    console.error(error);
-    grid.innerHTML = '<p style="text-align:center;">Error loading data.</p>';
-  }
-}
-
-// ---- Search logic ----
+// ---- Handle search button click ----
 function searchProducts() {
   const query = searchInput.value.trim().toLowerCase();
   if (query === '') {
-    // if input is empty, reset to show static HTML cards again
-    if (!showingStatic) location.reload(); 
+    // reset page to initial static cards if input is empty
+    if (!showingStatic) location.reload();
     return;
   }
   fetchPhones(query);
 }
 
-// ---- Event listeners ----
+// ---- Event listener for search button only ----
 searchBtn.addEventListener('click', searchProducts);
-searchInput.addEventListener('focus', () => {
-  // optional: show loading immediately when user clicks search bar
-  if (searchInput.value.trim() !== '') showLoading();
-});
+
+// Optional: Press Enter to search
 searchInput.addEventListener('keypress', e => {
   if (e.key === 'Enter') searchProducts();
 });
