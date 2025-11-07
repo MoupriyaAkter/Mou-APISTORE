@@ -20,18 +20,22 @@ let showingStatic = true; // track if initial static cards are visible
 // ---- Fetch phones from API ----
 async function fetchPhones(searchText) {
   showLoading(true); // show loader while fetching
-  
+  //try {
     const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`);
     const data = await res.json();
     displayProducts(data.data);
- 
+ /*fatch error ignore the code
+ } catch (err) {
+   console.error(err);
+    grid.innerHTML = '<p style="text-align:center;">Error loading data.</p>';
+  }*/
   showLoading(false); // hide loader after fetching
 }
 
 // ---- Display products dynamically ----
 function displayProducts(phones) {
   grid.innerHTML = ''; // clear previous cards
-
+  showingStatic = false;
 
   if (!phones || phones.length === 0) {
     grid.innerHTML = '<p style="text-align:center;">No products found.</p>';
@@ -55,3 +59,22 @@ function displayProducts(phones) {
     grid.appendChild(card);
   });
 }
+
+// ---- Handle search button click ----
+function searchProducts() {
+  const query = searchInput.value.trim().toLowerCase();
+  if (query === '') {
+    // reset page to initial static cards if input is empty
+    if (!showingStatic) location.reload();
+    return;
+  }
+  fetchPhones(query);
+}
+
+// ---- Event listener for search button only ----
+searchBtn.addEventListener('click', searchProducts);
+
+// Optional: Press Enter to search
+searchInput.addEventListener('keypress', e => {
+  if (e.key === 'Enter') searchProducts();
+});
